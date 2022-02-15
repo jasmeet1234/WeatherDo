@@ -1,0 +1,323 @@
+@import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500&family=Open+Sans:wght@300&family=Roboto:wght@300&family=Sacramento&display=swap");
+
+/* keyframe */
+@keyframes wind {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateY(4rem);
+  }
+  100% {
+    transform: translateY(calc(+5rem - 1rem));
+    left: 99%;
+    transform: translateY(0);
+  }
+}
+@keyframes moveUp {
+  0% {
+    transform: translateY(80rem);
+  }
+  80% {
+    transform: translateY(-3rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Roboto", sans-serif;
+  overflow: hidden;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-boxs;
+}
+
+.container {
+  position: relative;
+
+  height: 100vh;
+}
+/* wind */
+
+/* .wind-1 img {
+  width: 10rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  animation: wind 7s linear infinite;
+  opacity: 0.5;
+}
+.wind-2 img {
+  width: 10rem;
+  position: absolute;
+  left: 0;
+  top: 7rem;
+
+  animation: wind 8s linear infinite;
+  opacity: 0.5;
+}
+.wind-3 img {
+  width: 10rem;
+  position: absolute;
+  left: 0;
+  top: 14rem;
+
+  animation: wind 9s linear infinite;
+  opacity: 0.5;
+}
+.wind-4 img {
+  width: 10rem;
+  position: absolute;
+  left: 0;
+  top: 21rem;
+
+  animation: wind 7.4s linear infinite;
+  opacity: 0.5;
+}
+.wind-5 img {
+  width: 10rem;
+  position: absolute;
+  left: 0;
+  top: 28rem;
+
+  animation: wind 6.5s linear infinite;
+  opacity: 0.5;
+}
+.wind-6 img {
+  width: 10rem;
+  position: absolute;
+  left: 0;
+  top: 35rem;
+
+  animation: wind 8.25s linear infinite;
+  opacity: 0.5;
+}
+.wind-7 img {
+  width: 10rem;
+  position: absolute;
+  left: 0;
+  top: 40rem;
+
+  animation: wind 8.5s linear infinite;
+  opacity: 0.5;
+} */
+
+/* logo */
+.logo {
+  width: 13rem;
+}
+
+.landingLocation {
+  position: absolute;
+  width: 10rem;
+  top: 1rem;
+  right: 1rem;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 50rem;
+  box-shadow: 5px 2.5px 5px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s;
+}
+.landingLocation:hover {
+  box-shadow: 5px 2.5px 5px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+}
+.landingLocation:active {
+  transform: translateY(-1px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+  background-color: orangered;
+}
+/* landing page */
+.landing_page {
+  background: url("background_landing.jpg");
+  background-size: cover;
+  background-position: top;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 1s;
+  position: absolute;
+
+  /* animation: templateBackground 2s linear; */
+}
+/* landing page template */
+.landing_page_temp {
+  background-color: #eeeee4;
+  width: 50rem;
+  height: 47rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 2;
+  border-radius: 4rem;
+  animation: moveUp 1s ease-out;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+.landing_page_temp--heading {
+  font-family: "Sacramento", cursive;
+  font-size: 6rem;
+}
+.input-field {
+  position: relative;
+  width: 250px;
+  height: 44px;
+  line-height: 44px;
+}
+label {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  color: #d3d3d3;
+  transition: 0.2s all;
+  cursor: text;
+}
+input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid black;
+  box-shadow: none;
+  color: #111;
+  background: transparent;
+}
+.input-field label {
+  left: 0;
+  font-size: 1.75rem;
+  color: black;
+}
+input:invalid {
+  outline: 0;
+  color: black;
+  border-color: black;
+}
+input:focus,
+input:valid {
+  border-color: orangered;
+}
+input:focus ~ label,
+input:valid ~ label {
+  font-size: 2.1rem;
+  top: -2rem;
+  left: 0;
+  color: orangered;
+}
+.landing_form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.btn-landing {
+  margin-top: 2.5rem;
+  padding: 10px 45px;
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 14px;
+  font-size: 1.5rem;
+  box-shadow: 5px 2.5px 5px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s;
+}
+.btn-landing:hover {
+  box-shadow: 5px 2.5px 5px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+}
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+  border-color: orangered;
+  color: orangered;
+}
+/* section2 */
+.section2 {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  transform: translateX(-100vw);
+  /* transform: translateY(100vh); */
+  transition: transform 1s;
+  /* background: url("panel1bg.png"); */
+  background-size: contain;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+/* panel-1 */
+.panel1 {
+  height: 50rem;
+  width: 40rem;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 4rem;
+  background-image: linear-gradient(
+      to right top,
+      rgba(0, 0, 0, 0.5),
+      rgba(25, 25, 26, 0.5)
+    ),
+    url("sunny.gif");
+  background-size: contain;
+}
+.panel1-title {
+  font-family: "Sacramento", cursive;
+  font-size: 3rem;
+  padding: 2rem;
+}
+.panel1-cityName {
+  font-size: 4.5rem;
+  padding-bottom: 0.8rem;
+}
+.panel1-DateTime {
+  font-size: 2rem;
+  padding-bottom: 1.3rem;
+}
+.panel1-temp {
+  font-size: 7rem;
+  font-family: sans-serif;
+  font-weight: bolder;
+}
+.panel1-dash {
+  margin-top: -0.5rem;
+  font-size: 4rem;
+}
+.panel1-weather {
+  font-size: 2rem;
+  padding-bottom: 1rem;
+}
+.panel1-prec {
+  font-size: 2rem;
+}
+.panel1-prec svg {
+  color: white;
+}
+.panel1-bottom {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+/* media */
+@media (max-width: 900px) {
+  html {
+    font-size: 55%;
+  }
+  .landing_page_temp {
+    width: 40rem;
+    height: 43rem;
+  }
+}

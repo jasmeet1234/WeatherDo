@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      defer
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="script.js"></script>
+    <title>Weatherdo</title>
+  </head>
+  <body>
+    <main class="container">
+      <section class="landing_page">
+        <!-- <span class="wind-1"
+        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
+      /></span>
+
+      <span class="wind-2"
+        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
+      /></span>
+      <span class="wind-3"
+        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
+      /></span>
+      <span class="wind-4"
+        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
+      /></span>
+      <span class="wind-5"
+        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
+      /></span>
+      <span class="wind-6"
+        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
+      /></span>
+      <span class="wind-7"
+        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
+      /></span> -->
+        <div class="landing_page_temp">
+          <div class="landingLocationCon">
+            <img src="location.png" alt="locationPng" class="landingLocation" />
+          </div>
+          <div><img src="cloudy.png" alt="logo" class="logo" /></div>
+          <div><h1 class="landing_page_temp--heading">Weatherdo</h1></div>
+
+          <form action="#" class="landing_form">
+            <div class="input-field">
+              <input type="text" id="name" required />
+              <label for="name">Get Started</label>
+            </div>
+
+            <button class="btn btn-landing" type="submit">click</button>
+          </form>
+        </div>
+      </section>
+      <section class="section2">
+        <!-- panel1 -->
+        <div class="panel1">
+          <div class="panel1-title">Weatherdo</div>
+          <div class="panel1-cityName">Delhi</div>
+          <div class="panel1-DateTime">
+            <span class="panel1-DateTime-day">thursday,</span>
+            <span class="panel1-DateTime-Month">December</span>
+            <span class="panel1-DateTime-Date">01</span>
+          </div>
+          <div class="panel1-temp">12</div>
+          <div class="panel1-dash">---------------</div>
+          <div class="panel1-weather">cloudy</div>
+          <div class="panel1-prec">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-umbrella"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 0a.5.5 0 0 1 .5.5v.514C12.625 1.238 16 4.22 16 8c0 0 0 .5-.5.5-.149 0-.352-.145-.352-.145l-.004-.004-.025-.023a3.484 3.484 0 0 0-.555-.394A3.166 3.166 0 0 0 13 7.5c-.638 0-1.178.213-1.564.434a3.484 3.484 0 0 0-.555.394l-.025.023-.003.003s-.204.146-.353.146-.352-.145-.352-.145l-.004-.004-.025-.023a3.484 3.484 0 0 0-.555-.394 3.3 3.3 0 0 0-1.064-.39V13.5H8h.5v.039l-.005.083a2.958 2.958 0 0 1-.298 1.102 2.257 2.257 0 0 1-.763.88C7.06 15.851 6.587 16 6 16s-1.061-.148-1.434-.396a2.255 2.255 0 0 1-.763-.88 2.958 2.958 0 0 1-.302-1.185v-.025l-.001-.009v-.003s0-.002.5-.002h-.5V13a.5.5 0 0 1 1 0v.506l.003.044a1.958 1.958 0 0 0 .195.726c.095.191.23.367.423.495.19.127.466.229.879.229s.689-.102.879-.229c.193-.128.328-.304.424-.495a1.958 1.958 0 0 0 .197-.77V7.544a3.3 3.3 0 0 0-1.064.39 3.482 3.482 0 0 0-.58.417l-.004.004S5.65 8.5 5.5 8.5c-.149 0-.352-.145-.352-.145l-.004-.004a3.482 3.482 0 0 0-.58-.417A3.166 3.166 0 0 0 3 7.5c-.638 0-1.177.213-1.564.434a3.482 3.482 0 0 0-.58.417l-.004.004S.65 8.5.5 8.5C0 8.5 0 8 0 8c0-3.78 3.375-6.762 7.5-6.986V.5A.5.5 0 0 1 8 0zM6.577 2.123c-2.833.5-4.99 2.458-5.474 4.854A4.124 4.124 0 0 1 3 6.5c.806 0 1.48.25 1.962.511a9.706 9.706 0 0 1 .344-2.358c.242-.868.64-1.765 1.271-2.53zm-.615 4.93A4.16 4.16 0 0 1 8 6.5a4.16 4.16 0 0 1 2.038.553 8.688 8.688 0 0 0-.307-2.13C9.434 3.858 8.898 2.83 8 2.117c-.898.712-1.434 1.74-1.731 2.804a8.687 8.687 0 0 0-.307 2.131zm3.46-4.93c.631.765 1.03 1.662 1.272 2.53.233.833.328 1.66.344 2.358A4.14 4.14 0 0 1 13 6.5c.77 0 1.42.23 1.897.477-.484-2.396-2.641-4.355-5.474-4.854z"
+              />
+            </svg>
+            <span id="prec">12</span>
+          </div>
+          <div class="panel1-bottom">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+          </div>
+        </div>
+        <!-- panel2 -->
+        <div class="panel2"></div>
+      </section>
+    </main>
+  </body>
+</html>
