@@ -4,40 +4,29 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
-    <script
-      defer
-      src="https://kit.fontawesome.com/a076d05399.js"
-      crossorigin="anonymous"
-    ></script>
+
     <script defer src="script.js"></script>
     <title>Weatherdo</title>
   </head>
   <body>
     <main class="container">
+      <div class="loader loader1">
+        <div class="loader-shap"></div>
+        <div class="loader-shap"></div>
+        <div class="loader-shap"></div>
+      </div>
       <section class="landing_page">
-        <!-- <span class="wind-1"
-        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
-      /></span>
-
-      <span class="wind-2"
-        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
-      /></span>
-      <span class="wind-3"
-        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
-      /></span>
-      <span class="wind-4"
-        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
-      /></span>
-      <span class="wind-5"
-        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
-      /></span>
-      <span class="wind-6"
-        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
-      /></span>
-      <span class="wind-7"
-        ><img src="—Pngtree—vector wind icon_3981793.png" alt="wind"
-      /></span> -->
         <div class="landing_page_temp">
           <div class="landingLocationCon">
             <img src="location.png" alt="locationPng" class="landingLocation" />
@@ -48,15 +37,29 @@
           <form action="#" class="landing_form">
             <div class="input-field">
               <input type="text" id="name" required />
-              <label for="name">Get Started</label>
+              <label for="name">Enter a place</label>
             </div>
 
-            <button class="btn btn-landing" type="submit">click</button>
+            <button class="btn btn-landing" type="submit">Search</button>
           </form>
         </div>
       </section>
+      <div class="wrapper-warning">
+        <div class="strip"></div>
+        <div class="icon"><i class="fas fa-exclamation-circle"></i></div>
+        <div class="subject">
+          <div><h3>Error</h3></div>
+          <div class="p">No such country exists</div>
+        </div>
+        <div class="icon-times"><i class="fas fa-times"></i></div>
+      </div>
       <section class="section2">
         <!-- panel1 -->
+        <div class="loader loader2">
+          <div class="loader-shap"></div>
+          <div class="loader-shap"></div>
+          <div class="loader-shap"></div>
+        </div>
         <div class="panel1">
           <div class="panel1-title">Weatherdo</div>
           <div class="panel1-cityName">Delhi</div>
@@ -89,6 +92,7 @@
             <div>3</div>
           </div>
         </div>
+
         <!-- panel2 -->
         <div class="panel2"></div>
       </section>

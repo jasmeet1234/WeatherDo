@@ -2,7 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500&family=Open+Sans:wght@300&family=Roboto:wght@300&family=Sacramento&display=swap");
 
-/* keyframe */
 @keyframes wind {
   0% {
     transform: translateX(0px);
@@ -16,22 +15,11 @@
     transform: translateY(0);
   }
 }
-@keyframes moveUp {
-  0% {
-    transform: translateY(80rem);
-  }
-  80% {
-    transform: translateY(-3rem);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
 
 html {
   font-size: 62.5%;
   font-family: "Roboto", sans-serif;
-  overflow: hidden;
+  overflow: auto;
 }
 * {
   padding: 0;
@@ -41,75 +29,60 @@ html {
 
 .container {
   position: relative;
-
-  height: 100vh;
+  width: 100vw;
+  min-height: 100vh;
 }
-/* wind */
 
-/* .wind-1 img {
-  width: 10rem;
+.loader {
   position: absolute;
   left: 0;
   top: 0;
+  width: 100%;
+  min-height: 100%;
+  z-index: 25;
+  background: rgb(4, 1, 33);
+  background: linear-gradient(
+    298deg,
+    rgba(4, 1, 33, 1) 0%,
+    rgba(121, 111, 111, 1) 100%
+  );
 
-  animation: wind 7s linear infinite;
-  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.wind-2 img {
-  width: 10rem;
-  position: absolute;
-  left: 0;
-  top: 7rem;
-
-  animation: wind 8s linear infinite;
-  opacity: 0.5;
+.loader2 {
+  z-index: 25;
 }
-.wind-3 img {
-  width: 10rem;
-  position: absolute;
-  left: 0;
-  top: 14rem;
 
-  animation: wind 9s linear infinite;
-  opacity: 0.5;
+.loader-shap {
+  width: 2rem;
+  height: 2rem;
+  background-color: #ffde59;
+  margin: 1rem;
+  border-radius: 50%;
+  animation: load_shap 1.2s ease infinite;
 }
-.wind-4 img {
-  width: 10rem;
-  position: absolute;
-  left: 0;
-  top: 21rem;
 
-  animation: wind 7.4s linear infinite;
-  opacity: 0.5;
+.loader-shap:nth-child(1) {
+  animation-delay: 0.2s;
 }
-.wind-5 img {
-  width: 10rem;
-  position: absolute;
-  left: 0;
-  top: 28rem;
 
-  animation: wind 6.5s linear infinite;
-  opacity: 0.5;
+.loader-shap:nth-child(2) {
+  animation-delay: 0.4s;
 }
-.wind-6 img {
-  width: 10rem;
-  position: absolute;
-  left: 0;
-  top: 35rem;
 
-  animation: wind 8.25s linear infinite;
-  opacity: 0.5;
+.loader-shap:nth-child(3) {
+  animation-delay: 0.6s;
 }
-.wind-7 img {
-  width: 10rem;
-  position: absolute;
-  left: 0;
-  top: 40rem;
 
-  animation: wind 8.5s linear infinite;
-  opacity: 0.5;
-} */
-
+@keyframes load_shap {
+  50% {
+    transform: translateY(-50%);
+    border-bottom: 16px solid #292929;
+    box-shadow: 0 8rem 2rem rgba(255, 222, 89, 0.24);
+  }
+}
 /* logo */
 .logo {
   width: 13rem;
@@ -125,6 +98,7 @@ html {
   border-radius: 50rem;
   box-shadow: 5px 2.5px 5px rgba(0, 0, 0, 0.4);
   transition: all 0.2s;
+  cursor: pointer;
 }
 .landingLocation:hover {
   box-shadow: 5px 2.5px 5px rgba(0, 0, 0, 0.4);
@@ -137,16 +111,18 @@ html {
 }
 /* landing page */
 .landing_page {
+  display: flex;
   background: url("background_landing.jpg");
   background-size: cover;
   background-position: top;
-  height: 100vh;
   width: 100%;
-  display: flex;
+  min-height: 100%;
+  position: absolute;
   justify-content: center;
   align-items: center;
-  transition: all 1s;
-  position: absolute;
+  transition: transform 1s;
+
+  flex-direction: column;
 
   /* animation: templateBackground 2s linear; */
 }
@@ -161,7 +137,7 @@ html {
   flex-direction: column;
   z-index: 2;
   border-radius: 4rem;
-  animation: moveUp 1s ease-out;
+
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.4);
   position: relative;
 }
@@ -222,13 +198,14 @@ input:valid ~ label {
 }
 .btn-landing {
   margin-top: 2.5rem;
-  padding: 10px 45px;
+  padding: 1rem 3.5rem;
   background: transparent;
   border: 2px solid black;
   border-radius: 14px;
   font-size: 1.5rem;
   box-shadow: 5px 2.5px 5px rgba(0, 0, 0, 0.4);
   transition: all 0.2s;
+  cursor: pointer;
 }
 .btn-landing:hover {
   box-shadow: 5px 2.5px 5px rgba(0, 0, 0, 0.4);
@@ -240,39 +217,68 @@ input:valid ~ label {
   border-color: orangered;
   color: orangered;
 }
+/* landing page error handler */
+
+.wrapper-warning {
+  width: 50%;
+  height: 10rem;
+  background-color: wheat;
+  z-index: 30;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  left: 25%;
+  top: 45%;
+  visibility: hidden;
+  cursor: pointer;
+}
+.strip {
+  background-color: red;
+  width: 1rem;
+  height: 100%;
+  margin-right: 10%;
+}
+.icon {
+  font-size: 3rem;
+  margin-right: 5%;
+}
+.icon-times {
+  flex: 1;
+  text-align: end;
+  padding-right: 2rem;
+}
 /* section2 */
 .section2 {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
+  width: 100%;
+  min-height: 100vh;
   transform: translateX(-100vw);
   /* transform: translateY(100vh); */
-  transition: transform 1s;
+  transition: transition 1s;
   /* background: url("panel1bg.png"); */
-  background-size: contain;
+  background-size: cover;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  visibility: hidden;
 }
 /* panel-1 */
 .panel1 {
   height: 50rem;
   width: 40rem;
-  background-color: black;
+
   color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1rem;
   border-radius: 4rem;
-  background-image: linear-gradient(
-      to right top,
-      rgba(0, 0, 0, 0.5),
-      rgba(25, 25, 26, 0.5)
-    ),
-    url("sunny.gif");
+  z-index: 0;
   background-size: contain;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.4);
 }
 .panel1-title {
   font-family: "Sacramento", cursive;
@@ -282,6 +288,7 @@ input:valid ~ label {
 .panel1-cityName {
   font-size: 4.5rem;
   padding-bottom: 0.8rem;
+  text-align: center;
 }
 .panel1-DateTime {
   font-size: 2rem;
@@ -319,5 +326,13 @@ input:valid ~ label {
   .landing_page_temp {
     width: 40rem;
     height: 43rem;
+  }
+  .panel1 {
+    width: 38rem;
+    height: 50rem;
+  }
+  .wrapper-warning {
+    width: 100%;
+    left: 0;
   }
 }
