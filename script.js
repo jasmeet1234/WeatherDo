@@ -17,6 +17,8 @@ const loader2 = document.querySelector(".loader2");
 const cross = document.querySelector(".icon-times");
 const warning = document.querySelector(".wrapper-warning");
 const errorDes = document.querySelector(".p");
+const sunriseText = document.querySelector(".sunrise-text");
+const sunsetText = document.querySelector(".sunset-text");
 //Api Calls
 async function apiCallBtn(location) {
   return fetch(
@@ -68,28 +70,19 @@ const commonApi = function (el) {
   const fog = [701, 711, 721, 731, 741, 751, 761, 762, 771, 781];
   const cloud = [801, 802, 803, 804];
 
-  if (rain.includes(el.weather.id)) {
-    console.log("yes");
-
+  if (rain.includes(el.weather[0].id)) {
     p1.style.backgroundImage =
       "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('rain.gif')";
-  } else if (cloud.includes(el.weather.id)) {
-    console.log("yes");
-
+  } else if (cloud.includes(el.weather[0].id)) {
     p1.style.backgroundImage =
       "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('clod.jpg')";
-  } else if (ice.includes(el.weather.id)) {
-    console.log("yes");
-
+  } else if (ice.includes(el.weather[0].id)) {
     p1.style.backgroundImage =
       "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('snow.gif')";
-  } else if (fog.includes(el.weather.id)) {
-    console.log("yes");
-
+  } else if (fog.includes(el.weather[0].id)) {
     p1.style.backgroundImage =
       "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('mist.gif')";
   } else {
-    console.log("yes");
     p1.style.backgroundImage =
       "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('sunny.gif')";
   }
@@ -103,11 +96,25 @@ const commonApi = function (el) {
   }
   p1Month.textContent = months[day.getMonth()] + " ";
   p1Date.textContent = day.getDate() + ", " + day.getFullYear();
-  //temp
+  //temp prec wind
   p1Temp.innerHTML =
     el.main.temp.toPrecision(3) + "&#176" + "<span class='degree'>c</span>";
-  p1Weather.textContent = el.weather.description;
+
+  p1Weather.textContent = el.weather[0].description;
+  document.querySelector("#wind").textContent =
+    " " + el.wind.speed.toPrecision(2) + " m/s";
   document.querySelector("#prec").textContent = " " + el.main.humidity + "%";
+  //sunset sunrise
+  const sunset = new Date(el.sys.sunset * 1000);
+  const sunrise = new Date(el.sys.sunrise * 1000);
+  sunriseText.textContent = sunrise.toLocaleTimeString(navigator.language, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  sunsetText.textContent = sunset.toLocaleTimeString(navigator.language, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
   // //loader
   setTimeout(function () {
     loader2.style.display = "none";

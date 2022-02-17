@@ -15,6 +15,23 @@
     transform: translateY(0);
   }
 }
+@keyframes sun {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-0.5rem);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(0.5rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 
 html {
   font-size: 62.5%;
@@ -264,6 +281,7 @@ input:valid ~ label {
   justify-content: center;
   align-items: center;
   visibility: hidden;
+  background-position: top;
 }
 /* panel-1 */
 .panel1 {
@@ -297,7 +315,7 @@ input:valid ~ label {
 .panel1-temp {
   font-size: 7rem;
   font-family: sans-serif;
-  font-weight: bolder;
+  font-weight: 600;
 }
 .panel1-dash {
   margin-top: -0.5rem;
@@ -305,18 +323,56 @@ input:valid ~ label {
 }
 .panel1-weather {
   font-size: 2rem;
+  text-transform: capitalize;
   padding-bottom: 1rem;
 }
 .panel1-prec {
+  font-size: 2rem;
+  padding-bottom: 0.5rem;
+}
+.panel1-wind {
   font-size: 2rem;
 }
 .panel1-prec svg {
   color: white;
 }
 .panel1-bottom {
-  display: flex;
+  position: relative;
   width: 100%;
-  justify-content: space-evenly;
+  height: 100%;
+  flex: 1;
+}
+/* sunset and sunrise */
+.sunrise {
+  position: absolute;
+
+  left: 15%;
+  top: 17%;
+}
+.sunrise svg {
+  width: 4rem;
+  height: 4rem;
+  animation: sun 2.5s infinite linear;
+  color: yellow;
+}
+.sunset {
+  position: absolute;
+
+  right: 10%;
+  top: 17%;
+}
+.sunset svg {
+  height: 4rem;
+  width: 4rem;
+  animation: sun 2.5s infinite linear;
+  color: rgb(253, 101, 46);
+}
+.sun-text {
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+  padding-top: 1rem;
+  margin-left: -1.5rem;
 }
 /* media */
 @media (max-width: 900px) {
