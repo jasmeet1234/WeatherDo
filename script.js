@@ -13,19 +13,92 @@ const p1Temp = document.querySelector(".panel1-temp");
 const p1Weather = document.querySelector(".panel1-weather");
 const p1 = document.querySelector(".panel1 ");
 const loader1 = document.querySelector(".loader1");
-const loader2 = document.querySelector(".loader2");
+const boxh1 = document.querySelector(".box-h1");
+const boxp = document.querySelector(".box-p");
 const cross = document.querySelector(".icon-times");
 const warning = document.querySelector(".wrapper-warning");
 const errorDes = document.querySelector(".p");
 const sunriseText = document.querySelector(".sunrise-text");
 const sunsetText = document.querySelector(".sunset-text");
+const box = document.querySelector(".box");
+//common for geo and btn pollution
+const pollutionUi = function (el) {
+  const aqi = el.data.aqi;
+  console.log(el);
+
+  boxh1.textContent = "API : " + aqi;
+  if (aqi <= 50) {
+    boxp.textContent = "Good Air";
+    box.style.backgroundColor = "#009966";
+  } else if (aqi <= 100) {
+    box.style.backgroundColor = "#FFDE33";
+    boxp.textContent = "Moderate Air";
+  } else if (aqi <= 150) {
+    box.style.backgroundColor = "#FF9933";
+    boxp.textContent = "Unhealthy Air";
+  } else if (aqi <= 200) {
+    box.style.backgroundColor = "#CC0033";
+    boxp.textContent = "Unhealthy Air";
+  } else if (aqi <= 300) {
+    box.style.backgroundColor = "#660099";
+    boxp.textContent = "Very Unhealthy Air";
+  } else {
+    box.style.backgroundColor = "#7E0023";
+    boxp.textContent = "Hazardous Air";
+  }
+};
+//pollution btn
+async function commonPollutionBtn(location) {
+  return fetch(
+    `https://api.waqi.info/feed/${location}/?token=ecc8f84608444f1c2ec4f7c31f24760a5aed80d9`
+  );
+}
+//pollution gps
+async function commonPollutionGps(lat, long) {
+  return fetch(
+    `https://api.waqi.info/feed/geo:${lat};${long}/?token=ecc8f84608444f1c2ec4f7c31f24760a5aed80d9`
+  );
+}
+//pollution
+const pollutionFunBtn = function (location) {
+  commonPollutionBtn(location)
+    .then((el) => {
+      return el.json();
+    })
+    .then((el) => {
+      pollutionUi(el);
+    })
+    .catch((el) => {
+      errorDes.textContent = el;
+      warning.style.visibility = "visible";
+      section1.style.filter = "blur(1rem)";
+      console.log(el);
+    });
+};
+const pollutionFunGps = function (lat, long) {
+  commonPollutionGps(lat, long)
+    .then((el) => {
+      return el.json();
+    })
+    .then((el) => {
+      pollutionUi(el);
+    })
+    .catch((el) => {
+      errorDes.textContent = el;
+      warning.style.visibility = "visible";
+      section1.style.filter = "blur(1rem)";
+      console.log(el);
+    });
+};
 //Api Calls
 async function apiCallBtn(location) {
+  pollutionFunBtn(location);
   return fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=bf99cb0065e369f731cfedfe08b80061`
   );
 }
 async function apiCallGps(lat, long) {
+  pollutionFunGps(lat, long);
   return fetch(
     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=bf99cb0065e369f731cfedfe08b80061`
   );
@@ -33,7 +106,9 @@ async function apiCallGps(lat, long) {
 //Common api
 const commonApi = function (el) {
   section2.style.transform = "translateX(0)";
-  section2.style.visibility = "visible";
+  loader1.style.display = "flex";
+
+  section2.style.display = "inline-block";
   section1.style.transform = "translateX(100vw)";
   section1.style.display = "none";
   p1CityName.textContent = el.name;
@@ -117,7 +192,8 @@ const commonApi = function (el) {
   });
   // //loader
   setTimeout(function () {
-    loader2.style.display = "none";
+    section2.style.visibility = "visible";
+    loader1.style.display = "none";
   }, 2000);
 };
 //eventhandler for button
@@ -186,4 +262,9 @@ window.addEventListener("load", (el) => {
 cross.addEventListener("click", (el) => {
   section1.style.filter = "blur(0)";
   warning.style.visibility = "hidden";
+});
+// http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API key}
+//Pollution wiki
+box.addEventListener("click", (el) => {
+  window.open("https://en.wikipedia.org/wiki/Air_Pollution_Index");
 });
