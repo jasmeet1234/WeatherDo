@@ -21,6 +21,11 @@ const errorDes = document.querySelector(".p");
 const sunriseText = document.querySelector(".sunrise-text");
 const sunsetText = document.querySelector(".sunset-text");
 const box = document.querySelector(".box");
+const searchForm = document.querySelector(".search-bar");
+const searchFormInput = document.querySelector("#search-bar");
+const section2Con = document.querySelector(".section2Con");
+const mediaQuery = window.matchMedia("(max-width:900px)");
+
 //common for geo and btn pollution
 const pollutionUi = function (el) {
   const aqi = el.data.aqi;
@@ -262,9 +267,46 @@ window.addEventListener("load", (el) => {
 cross.addEventListener("click", (el) => {
   section1.style.filter = "blur(0)";
   warning.style.visibility = "hidden";
+  section2Con.style.filter = "blur(0)";
 });
 // http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API key}
 //Pollution wiki
 box.addEventListener("click", (el) => {
   window.open("https://en.wikipedia.org/wiki/Air_Pollution_Index");
+});
+//nav Search
+searchForm.addEventListener("submit", (el) => {
+  el.preventDefault();
+  console.log(document.querySelector("#search-bar").value);
+  apiCallBtn(searchFormInput.value)
+    .then((el) => {
+      if (el.statusText == "Not Found") {
+        throw new Error("No such place exists");
+      }
+      return el.json();
+    })
+    .then((el) => {
+      console.log(el);
+      commonApi(el);
+    })
+    .catch((el) => {
+      errorDes.textContent = el;
+      warning.style.visibility = "visible";
+      section2Con.style.filter = "blur(1rem)";
+      console.log(el);
+    });
+});
+searchFormInput.addEventListener("focusin", (el) => {
+  console.log("sdf");
+
+  if (mediaQuery.matches) {
+    document.querySelector(".nav-title").style.visibility = "hidden";
+    console.log("onfocus");
+  }
+});
+searchFormInput.addEventListener("focusout", (el) => {
+  if (mediaQuery.matches) {
+    document.querySelector(".nav-title").style.visibility = "visible";
+    console.log("onblur");
+  }
 });
