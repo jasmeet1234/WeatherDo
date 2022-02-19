@@ -277,8 +277,11 @@ box.addEventListener("click", (el) => {
 //nav Search
 searchForm.addEventListener("submit", (el) => {
   el.preventDefault();
+  const value = searchFormInput.value;
+  searchFormInput.value = "";
+  searchFormInput.blur();
   console.log(document.querySelector("#search-bar").value);
-  apiCallBtn(searchFormInput.value)
+  apiCallBtn(value)
     .then((el) => {
       if (el.statusText == "Not Found") {
         throw new Error("No such place exists");
