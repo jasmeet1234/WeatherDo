@@ -25,6 +25,7 @@ const searchForm = document.querySelector(".search-bar");
 const searchFormInput = document.querySelector("#search-bar");
 const section2Con = document.querySelector(".section2Con");
 const mediaQuery = window.matchMedia("(max-width:900px)");
+let temp = 0;
 
 //common for geo and btn pollution
 const pollutionUi = function (el) {
@@ -34,22 +35,28 @@ const pollutionUi = function (el) {
   boxh1.textContent = "API : " + aqi;
   if (aqi <= 50) {
     boxp.textContent = "Good Air";
+    document.querySelector(".triangle-alt").style.backgroundColor = "#009966";
     box.style.backgroundColor = "#009966";
   } else if (aqi <= 100) {
     box.style.backgroundColor = "#FFDE33";
     boxp.textContent = "Moderate Air";
+    document.querySelector(".triangle-alt").style.backgroundColor = "#FFDE33";
   } else if (aqi <= 150) {
     box.style.backgroundColor = "#FF9933";
     boxp.textContent = "Unhealthy Air";
+    document.querySelector(".triangle-alt").style.backgroundColor = "#FF9933";
   } else if (aqi <= 200) {
     box.style.backgroundColor = "#CC0033";
     boxp.textContent = "Unhealthy Air";
+    document.querySelector(".triangle-alt").style.backgroundColor = "#CC0033";
   } else if (aqi <= 300) {
     box.style.backgroundColor = "#660099";
     boxp.textContent = "Very Unhealthy Air";
+    document.querySelector(".triangle-alt").style.backgroundColor = "#660099";
   } else {
     box.style.backgroundColor = "#7E0023";
     boxp.textContent = "Hazardous Air";
+    document.querySelector(".triangle-alt").style.backgroundColor = "#7E0023";
   }
 };
 //pollution btn
@@ -177,8 +184,9 @@ const commonApi = function (el) {
   p1Month.textContent = months[day.getMonth()] + " ";
   p1Date.textContent = day.getDate() + ", " + day.getFullYear();
   //temp prec wind
+  temp = el.main.temp;
   p1Temp.innerHTML =
-    el.main.temp.toPrecision(3) + "&#176" + "<span class='degree'>c</span>";
+    el.main.temp.toPrecision(3) + "&#176" + "<span class='degree'>C</span>";
 
   p1Weather.textContent = el.weather[0].description;
   document.querySelector("#wind").textContent =
@@ -299,6 +307,7 @@ searchForm.addEventListener("submit", (el) => {
       console.log(el);
     });
 });
+//focus search bar
 searchFormInput.addEventListener("focusin", (el) => {
   console.log("sdf");
 
@@ -312,4 +321,18 @@ searchFormInput.addEventListener("focusout", (el) => {
     document.querySelector(".nav-title").style.visibility = "visible";
     console.log("onblur");
   }
+});
+//unit for temperature
+let count = 1;
+p1Temp.addEventListener("click", (el) => {
+  if (count % 2 != 0) {
+    p1Temp.innerHTML =
+      (temp * 1.8 + 32).toPrecision(3) +
+      "&#176" +
+      "<span class='degree'>F</span>";
+  } else {
+    p1Temp.innerHTML =
+      temp.toPrecision(3) + "&#176" + "<span class='degree'>C</span>";
+  }
+  count += 1;
 });
