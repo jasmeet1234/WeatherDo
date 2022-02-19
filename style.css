@@ -326,6 +326,9 @@ input:valid ~ label {
   font-weight: 600;
   cursor: pointer;
 }
+.degree {
+  color: orangered;
+}
 .panel1-dash {
   margin-top: -0.5rem;
   font-size: 4rem;
