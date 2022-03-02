@@ -24,13 +24,118 @@ const box = document.querySelector(".box");
 const searchForm = document.querySelector(".search-bar");
 const searchFormInput = document.querySelector("#search-bar");
 const section2Con = document.querySelector(".section2Con");
-const mediaQuery = window.matchMedia("(max-width:900px)");
+const mediaQuery = window.matchMedia("(max-width:560px)");
+const loader2 = document.querySelector(".loader2");
+const loader3 = document.querySelector(".loader3");
+//map marker
+let theMarker = L.icon({
+  iconUrl: "mapicon.png",
+
+  iconSize: [38, 95], // size of the icon
+
+  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+  shadowAnchor: [4, 62], // the same for the shadow
+  popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+});
 let temp = 0;
+//panelUI
+const panelUI = function (el) {
+  p1CityName.textContent = el.name;
+  const day = new Date(el.dt * 1000);
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  p1Day.textContent = days[day.getDay()] + ",";
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const rain = [
+    300, 301, 302, 310, 311, 312, 313, 314, 321, 500, 501, 502, 503, 504, 511,
+    520, 521, 522, 531, 200, 201, 202, 210, 211, 212, 221, 230, 231, 232,
+  ];
+  const ice = [600, 601, 602, 611, 612, 613, 615, 616, 620, 621, 622];
+  const fog = [701, 711, 721, 731, 741, 751, 761, 762, 771, 781];
+  const cloud = [801, 802, 803, 804];
+
+  if (rain.includes(el.weather[0].id)) {
+    p1.style.backgroundImage =
+      "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('rain.gif')";
+  } else if (cloud.includes(el.weather[0].id)) {
+    p1.style.backgroundImage =
+      "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('clod.jpg')";
+  } else if (ice.includes(el.weather[0].id)) {
+    p1.style.backgroundImage =
+      "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('snow.gif')";
+  } else if (fog.includes(el.weather[0].id)) {
+    p1.style.backgroundImage =
+      "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('mist.gif')";
+  } else {
+    p1.style.backgroundImage =
+      "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('sunny.gif')";
+  }
+  p1.style.backgroundSize = "cover";
+  if (day.getHours() > 6 && day.getHours() <= 19) {
+    section2.style.backgroundImage =
+      "linear-gradient(to right top, rgba(126, 212, 255, 0.5), rgba(73, 99, 217, 0.5) ),url('panel1bg.png')";
+  } else {
+    section2.style.backgroundImage =
+      "linear-gradient(to right top, rgba(145, 147, 148, 0.5), rgba(25, 25, 26, 0.5) ),url('panel1bg.png')";
+  }
+  p1Month.textContent = months[day.getMonth()] + " ";
+  p1Date.textContent = day.getDate() + ", " + day.getFullYear();
+  //temp prec wind
+  temp = el.main.temp;
+  // speechSynthesis.speak(
+  //   new SpeechSynthesisUtterance(`Hello, temperature is ${temp} celcius`)
+  // );
+  p1Temp.innerHTML =
+    el.main.temp.toPrecision(3) + "&#176" + "<span class='degree'>C</span>";
+
+  p1Weather.textContent = el.weather[0].description;
+  document.querySelector("#wind").textContent =
+    " " + el.wind.speed.toPrecision(2) + " m/s";
+  document.querySelector("#prec").textContent = " " + el.main.humidity + "%";
+  //sunset sunrise
+  const sunset = new Date(el.sys.sunset * 1000);
+  const sunrise = new Date(el.sys.sunrise * 1000);
+  sunriseText.textContent = sunrise.toLocaleTimeString(navigator.language, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  sunsetText.textContent = sunset.toLocaleTimeString(navigator.language, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+//map
+const map = L.map("map").setView([22.9074872, 79.07306671], 5);
+const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+const attribution =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Jasmeet';
+const tileLayer = L.tileLayer(tileUrl, { attribution });
+tileLayer.addTo(map);
 
 //common for geo and btn pollution
 const pollutionUi = function (el) {
   const aqi = el.data.aqi;
-  console.log(el);
 
   boxh1.textContent = "API : " + aqi;
   if (aqi <= 50) {
@@ -117,97 +222,19 @@ async function apiCallGps(lat, long) {
 }
 //Common api
 const commonApi = function (el) {
-  section2.style.transform = "translateX(0)";
-  loader1.style.display = "flex";
-
-  section2.style.display = "inline-block";
-  section1.style.transform = "translateX(100vw)";
+  loader2.style.visibility = "visible";
+  document.getElementsByTagName("html")[0].style.overflow = "hidden";
+  section2.classList.toggle("hidden");
   section1.style.display = "none";
-  p1CityName.textContent = el.name;
-  const day = new Date(el.dt * 1000);
-  const days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  p1Day.textContent = days[day.getDay()] + ",";
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const rain = [
-    300, 301, 302, 310, 311, 312, 313, 314, 321, 500, 501, 502, 503, 504, 511,
-    520, 521, 522, 531, 200, 201, 202, 210, 211, 212, 221, 230, 231, 232,
-  ];
-  const ice = [600, 601, 602, 611, 612, 613, 615, 616, 620, 621, 622];
-  const fog = [701, 711, 721, 731, 741, 751, 761, 762, 771, 781];
-  const cloud = [801, 802, 803, 804];
-
-  if (rain.includes(el.weather[0].id)) {
-    p1.style.backgroundImage =
-      "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('rain.gif')";
-  } else if (cloud.includes(el.weather[0].id)) {
-    p1.style.backgroundImage =
-      "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('clod.jpg')";
-  } else if (ice.includes(el.weather[0].id)) {
-    p1.style.backgroundImage =
-      "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('snow.gif')";
-  } else if (fog.includes(el.weather[0].id)) {
-    p1.style.backgroundImage =
-      "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('mist.gif')";
-  } else {
-    p1.style.backgroundImage =
-      "linear-gradient(to right top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url('sunny.gif')";
-  }
-  p1.style.backgroundSize = "cover";
-  if (day.getHours() > 6 && day.getHours() <= 19) {
-    section2.style.backgroundImage =
-      "linear-gradient(to right top, rgba(126, 212, 255, 0.5), rgba(73, 99, 217, 0.5) ),url('panel1bg.png')";
-  } else {
-    section2.style.backgroundImage =
-      "linear-gradient(to right top, rgba(145, 147, 148, 0.5), rgba(25, 25, 26, 0.5) ),url('panel1bg.png')";
-  }
-  p1Month.textContent = months[day.getMonth()] + " ";
-  p1Date.textContent = day.getDate() + ", " + day.getFullYear();
-  //temp prec wind
-  temp = el.main.temp;
-  p1Temp.innerHTML =
-    el.main.temp.toPrecision(3) + "&#176" + "<span class='degree'>C</span>";
-
-  p1Weather.textContent = el.weather[0].description;
-  document.querySelector("#wind").textContent =
-    " " + el.wind.speed.toPrecision(2) + " m/s";
-  document.querySelector("#prec").textContent = " " + el.main.humidity + "%";
-  //sunset sunrise
-  const sunset = new Date(el.sys.sunset * 1000);
-  const sunrise = new Date(el.sys.sunrise * 1000);
-  sunriseText.textContent = sunrise.toLocaleTimeString(navigator.language, {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  sunsetText.textContent = sunset.toLocaleTimeString(navigator.language, {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  panelUI(el);
   // //loader
   setTimeout(function () {
     section2.style.visibility = "visible";
     loader1.style.display = "none";
-  }, 2000);
+    map.invalidateSize();
+    loader2.style.visibility = "hidden";
+    document.getElementsByTagName("html")[0].style.overflow = "auto";
+  }, 3000);
 };
 //eventhandler for button
 const buttonMechanisum = function (el) {
@@ -221,6 +248,12 @@ const buttonMechanisum = function (el) {
     })
     .then((el) => {
       console.log(el);
+      map.setView([el.coord.lat, el.coord.lon], 12);
+      if (theMarker != undefined) {
+        map.removeLayer(theMarker);
+      }
+      //Add a marker to show where you clicked.
+      theMarker = L.marker([el.coord.lat, el.coord.lon]).addTo(map);
       commonApi(el);
     })
     .catch((el) => {
@@ -243,6 +276,13 @@ const locationMechanisum = function (el) {
             return el.json();
           })
           .then((el) => {
+            console.log(el);
+            map.setView([el.coord.lat, el.coord.lon], 12);
+            if (theMarker != undefined) {
+              map.removeLayer(theMarker);
+            }
+            //Add a marker to show where you clicked.
+            theMarker = L.marker([el.coord.lat, el.coord.lon]).addTo(map);
             commonApi(el);
           })
           .catch((el) => {
@@ -277,7 +317,7 @@ cross.addEventListener("click", (el) => {
   warning.style.visibility = "hidden";
   section2Con.style.filter = "blur(0)";
 });
-// http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API key}
+
 //Pollution wiki
 box.addEventListener("click", (el) => {
   window.open("https://en.wikipedia.org/wiki/Air_Pollution_Index");
@@ -336,3 +376,136 @@ p1Temp.addEventListener("click", (el) => {
   }
   count += 1;
 });
+
+//slider
+const slider = function () {
+  const slides = document.querySelectorAll(".slide");
+  const btnLeft = document.querySelector(".slider__btn--left");
+  const btnRight = document.querySelector(".slider__btn--right");
+  const dotContainer = document.querySelector(".dots");
+
+  let curSlide = 0;
+  const maxSlide = slides.length;
+
+  // Functions
+  const createDots = function () {
+    slides.forEach(function (_, i) {
+      dotContainer.insertAdjacentHTML(
+        "beforeend",
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
+    });
+  };
+
+  const activateDot = function (slide) {
+    document
+      .querySelectorAll(".dots__dot")
+      .forEach((dot) => dot.classList.remove("dots__dot--active"));
+
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add("dots__dot--active");
+  };
+
+  const goToSlide = function (slide) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+    );
+  };
+
+  // Next slide
+  const nextSlide = function () {
+    if (curSlide === maxSlide - 1) {
+      curSlide = 0;
+    } else {
+      curSlide++;
+    }
+
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  };
+
+  const prevSlide = function () {
+    if (curSlide === 0) {
+      curSlide = maxSlide - 1;
+    } else {
+      curSlide--;
+    }
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  };
+
+  const init = function () {
+    goToSlide(0);
+    createDots();
+
+    activateDot(0);
+  };
+  init();
+
+  // Event handlers
+  btnRight.addEventListener("click", nextSlide);
+  btnLeft.addEventListener("click", prevSlide);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") prevSlide();
+    e.key === "ArrowRight" && nextSlide();
+  });
+
+  dotContainer.addEventListener("click", function (e) {
+    if (e.target.classList.contains("dots__dot")) {
+      const { slide } = e.target.dataset;
+      goToSlide(slide);
+      activateDot(slide);
+    }
+  });
+};
+slider();
+
+//map click handler function
+const panelMapHandler = function (el) {
+  panelUI(el);
+  loader3.style.visibility = "visible";
+
+  setTimeout((e) => {
+    loader3.style.visibility = "hidden";
+  }, 2000);
+};
+//map click handler
+map.on("click", function (e) {
+  lat = e.latlng.lat;
+  lon = e.latlng.lng;
+
+  console.log("You clicked the map at LAT: " + lat + " and LONG: " + lon);
+  //Clear existing marker,
+
+  if (theMarker != undefined) {
+    map.removeLayer(theMarker);
+  }
+
+  //Add a marker to show where you clicked.
+  theMarker = L.marker([lat, lon]).addTo(map);
+  apiCallGps(lat, lon)
+    .then((el) => {
+      return el.json();
+    })
+    .then((el) => {
+      panelMapHandler(el);
+    })
+    .catch((el) => {
+      errorDes.textContent = el;
+      warning.style.visibility = "visible";
+      section1.style.filter = "blur(1rem)";
+      console.log(el);
+    });
+});
+
+// fetch(
+//   `https://api.openweathermap.org/data/2.5/forecast?q=delhi&APPID=bf99cb0065e369f731cfedfe08b80061`
+// )
+//   .then((el) => {
+//     return el.json();
+//   })
+//   .then((el) => {
+//     console.log(el);
+//   });
