@@ -42,7 +42,7 @@ html {
 }
 body {
   max-width: 100%;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 * {
   padding: 0;
@@ -57,7 +57,7 @@ body {
 }
 
 .loader {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
@@ -91,6 +91,9 @@ body {
     rgba(4, 1, 33, 0, 5) 0%,
     rgba(121, 111, 111, 0.5) 100%
   );
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .loader-shap {
@@ -641,7 +644,7 @@ input:valid ~ label {
 } */
 .slider {
   position: relative;
-  height: 100vh;
+  height: 75rem;
 }
 .slide {
   position: absolute;

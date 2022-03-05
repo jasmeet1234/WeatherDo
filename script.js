@@ -223,7 +223,7 @@ async function apiCallGps(lat, long) {
 //Common api
 const commonApi = function (el) {
   loader2.style.visibility = "visible";
-  document.getElementsByTagName("html")[0].style.overflow = "hidden";
+  // document.getElementsByTagName("html")[0].style.overflow = "hidden";
   section2.classList.toggle("hidden");
   section1.style.display = "none";
   panelUI(el);
@@ -233,7 +233,7 @@ const commonApi = function (el) {
     loader1.style.display = "none";
     map.invalidateSize();
     loader2.style.visibility = "hidden";
-    document.getElementsByTagName("html")[0].style.overflow = "auto";
+    // document.getElementsByTagName("html")[0].style.overflow = "auto";
   }, 3000);
 };
 //eventhandler for button
