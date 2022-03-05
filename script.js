@@ -28,6 +28,11 @@ const mediaQuery = window.matchMedia("(max-width:560px)");
 const loader2 = document.querySelector(".loader2");
 const loader3 = document.querySelector(".loader3");
 let theMarker = undefined;
+const narrationContainer = document.querySelector(".nar-con");
+const narDot = document.querySelector(".nar-dot");
+let narratinArray = [];
+
+let speak = "";
 //map marker
 let theMarkericon = L.icon({
   iconUrl: "mapicon.png",
@@ -99,11 +104,25 @@ const panelUI = function (el) {
   p1Date.textContent = day.getDate() + ", " + day.getFullYear();
   //temp prec wind
   temp = el.main.temp;
-  // speechSynthesis.speak(
-  //   new SpeechSynthesisUtterance(`Hello, temperature is ${temp} celcius`)
-  // );
   p1Temp.innerHTML =
     el.main.temp.toPrecision(3) + "&#176" + "<span class='degree'>C</span>";
+  narratinArray = [
+    el.name,
+    temp,
+    el.weather[0].description,
+    el.main.humidity.toPrecision(2),
+    days[day.getDay()],
+    day.getHours(),
+  ];
+  speak = `${
+    narratinArray[5] >= 12 && narratinArray[5] <= 24
+      ? "Good Afternoon"
+      : "Goodmorning"
+  } user, in ${narratinArray[0]} its ${
+    narratinArray[1]
+  } degree celcius, Today weather condition would be ${
+    narratinArray[2]
+  }, with a humidity of ${narratinArray[3]} degree. Today`;
 
   p1Weather.textContent = el.weather[0].description;
   document.querySelector("#wind").textContent =
@@ -133,9 +152,14 @@ tileLayer.addTo(map);
 //common for geo and btn pollution
 const pollutionUi = function (el) {
   const aqi = el.data.aqi;
-
+  speak += ` ${
+    aqi <= 150
+      ? "there would be no need for a anti pollution mask"
+      : "you would need a anti pollution mask"
+  } as today's Air pollution index is ${aqi}`;
+  speakText = new SpeechSynthesisUtterance(speak);
   boxh1.textContent = "API : " + aqi;
-  if (aqi <= 50) {
+  if (aqi <= 150) {
     boxp.textContent = "Good Air";
     document.querySelector(".triangle-alt").style.backgroundColor = "#009966";
     box.style.backgroundColor = "#009966";
@@ -510,3 +534,26 @@ map.on("click", function (e) {
 //   .then((el) => {
 //     console.log(el);
 //   });
+
+//narration
+
+let narCount = 1;
+
+narrationContainer.addEventListener("click", (el) => {
+  if (narCount == 1) {
+    window.speechSynthesis.speak(speakText);
+  }
+  if (narCount % 2 == 0) {
+    narDot.style.backgroundColor = "red";
+    window.speechSynthesis.pause();
+  } else {
+    narDot.style.backgroundColor = "green";
+    window.speechSynthesis.resume();
+  }
+  speakText.addEventListener("end", (el) => {
+    narDot.style.backgroundColor = "red";
+    narCount = 1;
+  });
+
+  narCount++;
+});
