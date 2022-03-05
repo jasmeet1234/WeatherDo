@@ -143,12 +143,18 @@ const panelUI = function (el) {
 
 //map
 const map = L.map("map").setView([22.9074872, 79.07306671], 5);
-const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const attribution =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Jasmeet';
-const tileLayer = L.tileLayer(tileUrl, { attribution });
-tileLayer.addTo(map);
-
+var Stamen_Toner = L.tileLayer(
+  "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}",
+  {
+    attribution:
+      'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    subdomains: "abcd",
+    minZoom: 0,
+    maxZoom: 20,
+    ext: "png",
+  }
+);
+map.addLayer(Stamen_Toner);
 //common for geo and btn pollution
 const pollutionUi = function (el) {
   const aqi = el.data.aqi;
