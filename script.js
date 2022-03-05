@@ -27,15 +27,12 @@ const section2Con = document.querySelector(".section2Con");
 const mediaQuery = window.matchMedia("(max-width:560px)");
 const loader2 = document.querySelector(".loader2");
 const loader3 = document.querySelector(".loader3");
+let theMarker = undefined;
 //map marker
-let theMarker = L.icon({
+let theMarkericon = L.icon({
   iconUrl: "mapicon.png",
 
-  iconSize: [38, 95], // size of the icon
-
-  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-  shadowAnchor: [4, 62], // the same for the shadow
-  popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+  iconSize: [50, 50], // size of the icon
 });
 let temp = 0;
 //panelUI
@@ -247,13 +244,14 @@ const buttonMechanisum = function (el) {
       return el.json();
     })
     .then((el) => {
-      console.log(el);
       map.setView([el.coord.lat, el.coord.lon], 12);
       if (theMarker != undefined) {
         map.removeLayer(theMarker);
       }
       //Add a marker to show where you clicked.
-      theMarker = L.marker([el.coord.lat, el.coord.lon]).addTo(map);
+      theMarker = L.marker([el.coord.lat, el.coord.lon], {
+        icon: theMarkericon,
+      }).addTo(map);
       commonApi(el);
     })
     .catch((el) => {
@@ -282,7 +280,9 @@ const locationMechanisum = function (el) {
               map.removeLayer(theMarker);
             }
             //Add a marker to show where you clicked.
-            theMarker = L.marker([el.coord.lat, el.coord.lon]).addTo(map);
+            theMarker = L.marker([el.coord.lat, el.coord.lon], {
+              icon: theMarkericon,
+            }).addTo(map);
             commonApi(el);
           })
           .catch((el) => {
@@ -472,6 +472,7 @@ const panelMapHandler = function (el) {
   }, 2000);
 };
 //map click handler
+let theMarker1 = null;
 map.on("click", function (e) {
   lat = e.latlng.lat;
   lon = e.latlng.lng;
@@ -484,7 +485,7 @@ map.on("click", function (e) {
   }
 
   //Add a marker to show where you clicked.
-  theMarker = L.marker([lat, lon]).addTo(map);
+  theMarker = L.marker([lat, lon], { icon: theMarkericon }).addTo(map);
   apiCallGps(lat, lon)
     .then((el) => {
       return el.json();
