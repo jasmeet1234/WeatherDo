@@ -1,7 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500&family=Open+Sans:wght@300&family=Roboto:wght@300&family=Sacramento&display=swap");
-
+@font-face {
+  font-family: jas;
+  font-weight: bold;
+  src: url("jas.otf") format("opentype");
+}
 @keyframes wind {
   0% {
     transform: translateX(0px);
@@ -31,6 +35,9 @@
   100% {
     transform: translateY(0);
   }
+}
+.utility {
+  margin-top: 1.5rem;
 }
 
 html {
@@ -81,6 +88,21 @@ body {
   visibility: hidden;
 }
 .loader3 {
+  z-index: 25;
+  height: 100%;
+  visibility: hidden;
+  border-radius: 4rem;
+  background: rgb(4, 1, 33, 0.9);
+  background: linear-gradient(
+    298deg,
+    rgba(4, 1, 33, 0, 5) 0%,
+    rgba(121, 111, 111, 0.5) 100%
+  );
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.loader4 {
   z-index: 25;
   height: 100%;
   visibility: hidden;
@@ -409,12 +431,126 @@ input:valid ~ label {
   margin-left: -1.5rem;
 }
 
-/* panel2 */
-/* .panel2 {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-} */
+/* panel3 */
+.panel3 {
+  height: 50rem;
+  width: 40rem;
+  margin: 10rem 0;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4rem;
+  z-index: 0;
+  /* background-size: contain; */
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.panel3 div > div {
+  margin: 1rem;
+  transition: all 0.3s;
+}
+.wtcon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.panel3-heading {
+  background-color: #8ba892;
+  height: 7rem;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.panel3-heading svg,
+.panel3-heading span {
+  margin: 0 0.5rem;
+}
+.panel3-heading span {
+  margin: 0 0.5rem;
+  font-family: "Sacramento", cursive;
+  margin-top: 0.5rem;
+}
+
+.panel3-day1 {
+  background-color: #e3bb88;
+  flex: 2;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s;
+}
+.panel3-day1 > div {
+  flex: 1;
+}
+.panel3-day2 {
+  background-color: #db9864;
+  flex: 2;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s;
+}
+.panel3-day2 > div {
+  flex: 1;
+}
+.panel3-day3 {
+  background-color: #b1695a;
+  flex: 2;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s;
+}
+.panel3-day3 > div {
+  flex: 1;
+}
+.panel3-icon-1,
+.panel3-icon-2,
+.panel3-icon-3 {
+  text-align: center;
+
+  transition: all 0.001s;
+}
+.panel3-date-1,
+.panel3-date-2,
+.panel3-date-3 {
+  text-align: center;
+  vertical-align: middle;
+  transform: translateY(1.2rem);
+}
+.panel3-date-1 > span,
+.panel3-date-2 > span,
+.panel3-date-3 > span {
+  transition: all 0.4s;
+}
+.panel3-weather-1,
+.panel3-weather-2,
+.panel3-weather-3 {
+  opacity: 0;
+  transform: translateY(0.3rem);
+  transition: all 0.4s;
+}
+.panel-temp {
+  transform: translateY(2.3rem);
+}
+#day1,
+#day2,
+#day3 {
+  opacity: 0;
+  transform: all 0.4s;
+}
+/* panel2 pollution */
 .pollution {
   width: 40rem;
   height: 100%;
@@ -458,11 +594,11 @@ input:valid ~ label {
   width: 100%;
   background-color: #434344;
   box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.4);
-  z-index: 1000;
+  z-index: 10000;
   display: flex;
   flex-direction: row;
   align-items: center;
-  position: sticky;
+  position: fixed;
   top: 0;
 }
 .nav-left {
@@ -663,14 +799,17 @@ input:valid ~ label {
 .map-container {
   padding: 3rem;
   display: flex;
-  height: 70rem;
+  height: 77rem;
+  margin-top: 7rem;
 }
+
 .map-info {
   flex: 1;
 }
 #map {
   height: 100%;
   flex: 2;
+  border: 2px solid black;
 }
 /* .map-con {
   flex: 2;
@@ -698,16 +837,18 @@ input:valid ~ label {
   z-index: 10;
 
   border: none;
-  background: rgba(255, 255, 255, 0.7);
+  background: white;
   font-family: inherit;
   color: #333;
   border-radius: 50%;
-  height: 5.5rem;
-  width: 5.5rem;
-  font-size: 3.25rem;
+  height: 6.5rem;
+  width: 6.5rem;
+
   cursor: pointer;
 }
-
+.slider__btn img {
+  width: 4rem;
+}
 .slider__btn--left {
   left: 16%;
   transform: translate(-50%, -50%);
@@ -760,6 +901,16 @@ input:valid ~ label {
     position: static;
     flex-direction: column;
   }
+  .map-container {
+    flex-direction: column;
+  }
+  #map {
+    order: 0;
+  }
+  .map-info {
+    order: 1;
+    margin-top: 2rem;
+  }
 }
 @media (max-width: 900px) {
   html {
@@ -776,5 +927,15 @@ input:valid ~ label {
   .wrapper-warning {
     width: 100%;
     left: 0;
+  }
+}
+@media (max-width: 700px) {
+  .slider__btn--left {
+    left: 7%;
+  }
+
+  .slider__btn--right {
+    right: 7%;
+    /* transform: translate(50%, -50%); */
   }
 }
