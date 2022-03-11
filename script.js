@@ -253,9 +253,8 @@ const forcastUI = function (el) {
     let dayz = new Date(el.list[j].dt_txt);
     document.querySelector(
       `.panel3-date-${ind}`
-    ).innerHTML = `${dayz.getDate()} ${
-      months[dayz.getMonth()]
-    } <span id='day${ind}'> ${days[dayz.getDay()]}</span>`;
+    ).innerHTML = `${dayz.getDate()} ${months[dayz.getMonth()]}`;
+    document.querySelector(`.day${ind}`).textContent = days[dayz.getDay()];
 
     ind += 1;
   }
@@ -574,7 +573,6 @@ const nextSlide = function () {
   goToSlide(curSlide);
   activateDot(curSlide);
 };
-setInterval(nextSlide, 8000);
 
 const prevSlide = function () {
   if (curSlide === 0) {
@@ -585,6 +583,7 @@ const prevSlide = function () {
   goToSlide(curSlide);
   activateDot(curSlide);
 };
+// let timer = setInterval(nextSlide, 8000);
 
 //mobile slider
 
@@ -635,11 +634,15 @@ function handleGesture() {
   if (touchendX < touchstartX) {
     console.log("Swiped Left");
     nextSlide();
+    // clearInterval(timer);
+    // timer = setInterval(nextSlide, 8000);
   }
 
   if (touchendX > touchstartX) {
     console.log("Swiped Right");
     prevSlide();
+    // clearInterval(timer);
+    // timer = setInterval(nextSlide, 8000);
   }
 
   if (touchendY < touchstartY) {
@@ -665,8 +668,16 @@ const slider = function () {
   init();
 
   // Event handlers
-  btnRight.addEventListener("click", nextSlide);
-  btnLeft.addEventListener("click", prevSlide);
+  btnRight.addEventListener("click", (el) => {
+    // clearInterval(timer);
+    // timer = setInterval(nextSlide, 8000);
+    nextSlide();
+  });
+  btnLeft.addEventListener("click", (el) => {
+    // clearInterval(timer);
+    // timer = setInterval(nextSlide, 8000);
+    prevSlide();
+  });
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "ArrowLeft") prevSlide();
@@ -687,21 +698,25 @@ slider();
 const forcastActive = function (i) {
   i += 1;
   document.querySelector(`.panel3-day${i}`).style.flex = "5";
-  document.querySelector(`.panel3-icon-${i}`).style.transform =
-    "translateY(1.3rem) ";
-  document.querySelector(`.panel3-icon-${i}`).style.transform =
-    "translateY(1.3)";
-  document.querySelector(`#day${i}`).style.opacity = "1";
+  document.querySelector(`.panel3-day${i}`).style.fontSize = "2.6rem";
+  document.querySelector(`.panel3-icon-${i}`).classList.add("animation-sun");
+  document.querySelector(`.panel3-temp-${i}`).style.transform = "translateY(0)";
+  document.querySelector(`.panel3-date-${i}`).style.transform = "translateY(0)";
+  document.querySelector(`.day${i}`).style.opacity = "1";
 
   document.querySelector(`.panel3-weather-${i}`).style.opacity = "1";
 };
 const forcastNotActive = function (i) {
   i += 1;
   document.querySelector(`.panel3-day${i}`).style.flex = "2";
-  document.querySelector(`.panel3-icon-${i}`).style.transform = "translateY(0)";
-  document.querySelector(`#day${i}`).style.opacity = "0";
+  document.querySelector(`.panel3-day${i}`).style.fontSize = "2.2rem";
+  document.querySelector(`.panel3-icon-${i}`).classList.remove("animation-sun");
+  document.querySelector(`.panel3-date-${i}`).style.transform =
+    "translateY(2.3rem)";
+  document.querySelector(`.panel3-temp-${i}`).style.transform =
+    "translateY(2.3rem)";
+  document.querySelector(`.day${i}`).style.opacity = "0";
 
-  document.querySelector(`.panel3-icon-${i}`).style.transform = "translateY(0)";
   document.querySelector(`.panel3-weather-${i}`).style.opacity = "0";
 };
 const panelMapHandler = function (el) {
@@ -790,5 +805,17 @@ panelAll3.forEach((el, i) => {
       forcastNotActive(k);
     }
     forcastActive(i);
+  });
+});
+//focus for slider
+slides.forEach((e) => {
+  e.addEventListener("focus", (el) => {
+    clearInterval(timer);
+    console.log("eeeee");
+  });
+});
+slides.forEach((e) => {
+  e.addEventListener("blur", (el) => {
+    timer = setInterval(nextSlide, 8000);
   });
 });

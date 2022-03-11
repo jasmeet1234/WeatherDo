@@ -39,6 +39,9 @@
 .utility {
   margin-top: 1.5rem;
 }
+.animation-sun {
+  animation: sun 2.5s infinite linear;
+}
 
 html {
   font-size: 62.5%;
@@ -447,7 +450,7 @@ input:valid ~ label {
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.4);
   position: relative;
   overflow: hidden;
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 400;
 }
 
@@ -460,14 +463,25 @@ input:valid ~ label {
   flex-direction: column;
   justify-content: center;
 }
+.ddcon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .panel3-heading {
-  background-color: #8ba892;
+  background: linear-gradient(
+      to right top,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    #8ba892;
   height: 7rem;
   display: flex;
   width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  font-size: 3rem;
 }
 .panel3-heading svg,
 .panel3-heading span {
@@ -476,11 +490,16 @@ input:valid ~ label {
 .panel3-heading span {
   margin: 0 0.5rem;
   font-family: "Sacramento", cursive;
-  margin-top: 0.5rem;
+  margin-top: 7px;
 }
 
 .panel3-day1 {
-  background-color: #e3bb88;
+  background: linear-gradient(
+      to right top,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    #e3bb88;
   flex: 2;
   width: 100%;
   display: flex;
@@ -492,7 +511,12 @@ input:valid ~ label {
   flex: 1;
 }
 .panel3-day2 {
-  background-color: #db9864;
+  background: linear-gradient(
+      to right top,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    #db9864;
   flex: 2;
   width: 100%;
   display: flex;
@@ -504,7 +528,12 @@ input:valid ~ label {
   flex: 1;
 }
 .panel3-day3 {
-  background-color: #b1695a;
+  background: linear-gradient(
+      to right top,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    #b1695a;
   flex: 2;
   width: 100%;
   display: flex;
@@ -526,30 +555,32 @@ input:valid ~ label {
 .panel3-date-2,
 .panel3-date-3 {
   text-align: center;
-  vertical-align: middle;
-  transform: translateY(1.2rem);
+
+  transform: translateY(2.3rem);
 }
-.panel3-date-1 > span,
-.panel3-date-2 > span,
-.panel3-date-3 > span {
+.panel3-date-1 > div,
+.panel3-date-2 > div,
+.panel3-date-3 > div {
   transition: all 0.4s;
 }
 .panel3-weather-1,
 .panel3-weather-2,
 .panel3-weather-3 {
   opacity: 0;
-  transform: translateY(0.3rem);
+  /* transform: translateY(0.3rem); */
   transition: all 0.4s;
 }
 .panel-temp {
   transform: translateY(2.3rem);
 }
-#day1,
-#day2,
-#day3 {
+.day1,
+.day2,
+.day3 {
   opacity: 0;
   transform: all 0.4s;
+  text-align: center;
 }
+
 /* panel2 pollution */
 .pollution {
   width: 40rem;
