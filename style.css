@@ -562,6 +562,7 @@ input:valid ~ label {
   bottom: 5rem;
   padding: 2rem 1.5rem;
   background-color: white;
+
   border-radius: 100rem;
   box-shadow: 5px 2.5px 5px rgba(0, 0, 0, 0.4);
   transition: all 0.2s;
@@ -837,7 +838,7 @@ input:valid ~ label {
   z-index: 10;
 
   border: none;
-  background: white;
+  background: gray;
   font-family: inherit;
   color: #333;
   border-radius: 50%;
@@ -848,6 +849,7 @@ input:valid ~ label {
 }
 .slider__btn img {
   width: 4rem;
+  filter: saturate(0.5);
 }
 .slider__btn--left {
   left: 16%;
