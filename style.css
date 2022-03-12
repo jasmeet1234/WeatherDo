@@ -19,6 +19,20 @@
     transform: translateY(0);
   }
 }
+@keyframes wind1 {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateY(4rem);
+  }
+  100%,
+  99% {
+    transform: translateY(calc(+5rem - 1rem));
+    right: 99%;
+    transform: translateY(0);
+  }
+}
 @keyframes sun {
   0% {
     transform: translateY(0);
@@ -176,6 +190,7 @@ body {
   background-color: orangered;
 }
 /* landing page */
+
 .landing_page {
   display: flex;
   background: url("background_landing.jpg");
@@ -209,6 +224,13 @@ body {
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.4);
   position: relative;
 }
+/* rain */
+
+#canvas {
+  position: fixed;
+  left: 0;
+}
+
 .landing_page_temp--heading {
   font-family: "Sacramento", cursive;
   font-size: 6rem;
