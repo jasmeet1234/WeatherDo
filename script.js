@@ -380,6 +380,7 @@ const commonApi = function (el) {
   // //loader
   setTimeout(function () {
     section2.style.visibility = "visible";
+    section1.display = "none";
     loader1.style.display = "none";
     map.invalidateSize();
     loader2.style.visibility = "hidden";
@@ -685,7 +686,9 @@ slider();
 const forcastActive = function (i) {
   i += 1;
   document.querySelector(`.panel3-day${i}`).style.flex = "5";
-
+  document.querySelectorAll(`.cloud-panel-${i}`).forEach((el) => {
+    el.style.visibility = "visible";
+  });
   document.querySelector(`.panel3-icon-${i}`).classList.add("animation-sun");
   document.querySelector(`.panel3-temp-${i}`).style.transform = "translateY(0)";
   document.querySelector(`.panel3-date-${i}`).style.transform = "translateY(0)";
@@ -696,6 +699,9 @@ const forcastActive = function (i) {
 const forcastNotActive = function (i) {
   i += 1;
   document.querySelector(`.panel3-day${i}`).style.flex = "2";
+  document.querySelectorAll(`.cloud-panel-${i}`).forEach((el) => {
+    el.style.visibility = "hidden";
+  });
   document.querySelector(`.panel3-icon-${i}`).classList.remove("animation-sun");
   document.querySelector(`.panel3-date-${i}`).style.transform =
     "translateY(2.3rem)";

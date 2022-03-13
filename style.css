@@ -10,13 +10,21 @@
   0% {
     transform: translateX(0px);
   }
-  50% {
-    transform: translateY(4rem);
+  20% {
+    transform: translateY(0.4rem);
   }
-  100% {
-    transform: translateY(calc(+5rem - 1rem));
+  40% {
+    transform: translateY(-0.4rem);
+  }
+  60% {
+    transform: translateY(0.4rem);
+  }
+  80% {
+    transform: translateY(-0.4rem);
+  }
+  100%,
+  99% {
     left: 99%;
-    transform: translateY(0);
   }
 }
 @keyframes wind1 {
@@ -473,12 +481,13 @@ input:valid ~ label {
   position: relative;
   overflow: hidden;
   font-size: 2.2rem;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .panel3 div > div {
   margin: 1rem;
   transition: all 0.3s;
+  z-index: 1;
 }
 .wtcon {
   display: flex;
@@ -528,7 +537,9 @@ input:valid ~ label {
   align-items: center;
   justify-content: center;
   transition: all 0.4s;
+  position: relative;
 }
+
 .panel3-day1 > div {
   flex: 1;
 }
@@ -545,6 +556,7 @@ input:valid ~ label {
   align-items: center;
   justify-content: center;
   transition: all 0.4s;
+  position: relative;
 }
 .panel3-day2 > div {
   flex: 1;
@@ -562,6 +574,7 @@ input:valid ~ label {
   align-items: center;
   justify-content: center;
   transition: all 0.4s;
+  position: relative;
 }
 .panel3-day3 > div {
   flex: 1;
@@ -602,7 +615,52 @@ input:valid ~ label {
   transform: all 0.4s;
   text-align: center;
 }
+.cloud-panel-1,
+.cloud-panel-2,
+.cloud-panel-3 {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  visibility: hidden;
+  transition: none;
+}
+.cloud-panel-1 img,
+.cloud-panel-2 img,
+.cloud-panel-3 img {
+  height: 5rem;
+  opacity: 0.5;
+}
+.cloud1 {
+  /* left: 81%; */
+  top: 25%;
+  animation: wind 10s -1s infinite linear;
+}
 
+.cloud2 {
+  /* left: 1%; */
+  top: -2%;
+  animation: wind 10s -3s infinite linear;
+}
+.cloud3 {
+  /* left: 21%; */
+  top: 25%;
+  animation: wind 10s -5s infinite linear;
+}
+.cloud5 {
+  /* left: 61%; */
+  top: 25%;
+  animation: wind 10s -7s infinite linear;
+}
+
+.cloud6 {
+  /* left: 41%; */
+  top: -2%;
+  animation: wind 10s -9s infinite linear;
+}
+
+/* .cloud3 img {
+  width: 5.5rem;
+} */
 /* panel2 pollution */
 .pollution {
   width: 40rem;
