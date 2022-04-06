@@ -43,6 +43,7 @@ const loader2 = document.querySelector(".loader2");
 const loader3 = document.querySelector(".loader3");
 const loader4 = document.querySelector(".loader4");
 let theMarker = undefined;
+let newsData = [];
 const slides = document.querySelectorAll(".slide");
 const btnLeft = document.querySelector(".slider__btn--left");
 const btnRight = document.querySelector(".slider__btn--right");
@@ -96,8 +97,36 @@ let theMarkericon = L.icon({
   iconSize: [50, 50], // size of the icon
 });
 let temp = 0;
+// newsUi
+async function newsCall(name) {
+  return fetch(
+    `https://gnews.io/api/v4/search?q=${name}&lang=en&token=98a69e814190910a529f264609b35d48`
+  );
+}
+
+const newsCallBase = function (name) {
+  newsCall(name)
+    .then((el) => {
+      return el.json();
+    })
+    .then((el) => {
+      console.log(el);
+      newsUI(el);
+    });
+};
+const newsUI = function (el) {
+  for (let i = 0; i < 4; i++) {
+    document.querySelector(`.news-title-${i}`).textContent =
+      el.articles[i].title;
+    document
+      .querySelector(`.news-img-${i}`)
+      .setAttribute("src", `${el.articles[i].image}`);
+  }
+  newsData = el;
+};
 //panelUI
 const panelUI = function (el) {
+  newsCallBase(el.name);
   p1CityName.textContent = panel3Heading.textContent = el.name;
   const day = new Date(el.dt * 1000);
 
@@ -384,6 +413,7 @@ const commonApi = function (el) {
     loader1.style.display = "none";
     map.invalidateSize();
     loader2.style.visibility = "hidden";
+    document.querySelector("#canvas").style.display = "hidden";
     // document.getElementsByTagName("html")[0].style.overflow = "auto";
   }, 3000);
 };
@@ -606,6 +636,9 @@ window.mobileCheck = function () {
 let check = mobileCheck();
 if (check) {
   btnLeft.style.display = "none";
+  document.querySelectorAll(".slide").forEach((el) => {
+    el.style.transition = "0.4s";
+  });
   btnRight.style.display = "none";
 }
 slides.forEach((el) => {
@@ -613,6 +646,8 @@ slides.forEach((el) => {
     "touchstart",
     function (event) {
       touchstartX = event.changedTouches[0].screenX;
+      touchstartY = event.changedTouches[0].screenY;
+      console.log(touchstartX);
     },
     false
   );
@@ -623,7 +658,8 @@ slides.forEach((el) => {
     "touchend",
     function (event) {
       touchendX = event.changedTouches[0].screenX;
-
+      touchendY = event.changedTouches[0].screenY;
+      console.log(touchendX);
       handleGesture();
     },
     false
@@ -631,14 +667,20 @@ slides.forEach((el) => {
 });
 
 function handleGesture() {
-  if (touchendX < touchstartX) {
+  if (
+    touchendX < touchstartX &&
+    Math.abs(touchendX - touchstartX) > Math.abs(touchendY - touchstartY)
+  ) {
     console.log("Swiped Left");
     nextSlide();
     // clearInterval(timer);
     // timer = setInterval(nextSlide, 8000);
   }
 
-  if (touchendX > touchstartX) {
+  if (
+    touchendX > touchstartX &&
+    Math.abs(touchendX - touchstartX) > Math.abs(touchendY - touchstartY)
+  ) {
     console.log("Swiped Right");
     prevSlide();
     // clearInterval(timer);
@@ -686,9 +728,9 @@ slider();
 const forcastActive = function (i) {
   i += 1;
   document.querySelector(`.panel3-day${i}`).style.flex = "5";
-  document.querySelectorAll(`.cloud-panel-${i}`).forEach((el) => {
-    el.style.visibility = "visible";
-  });
+  // document.querySelectorAll(`.cloud-panel-${i}`).forEach((el) => {
+  //   el.style.visibility = "visible";
+  // });
   document.querySelector(`.panel3-icon-${i}`).classList.add("animation-sun");
   document.querySelector(`.panel3-temp-${i}`).style.transform = "translateY(0)";
   document.querySelector(`.panel3-date-${i}`).style.transform = "translateY(0)";
@@ -699,9 +741,9 @@ const forcastActive = function (i) {
 const forcastNotActive = function (i) {
   i += 1;
   document.querySelector(`.panel3-day${i}`).style.flex = "2";
-  document.querySelectorAll(`.cloud-panel-${i}`).forEach((el) => {
-    el.style.visibility = "hidden";
-  });
+  // document.querySelectorAll(`.cloud-panel-${i}`).forEach((el) => {
+  //   el.style.visibility = "hidden";
+  // });
   document.querySelector(`.panel3-icon-${i}`).classList.remove("animation-sun");
   document.querySelector(`.panel3-date-${i}`).style.transform =
     "translateY(2.3rem)";
@@ -1170,3 +1212,17 @@ var Ticker = (function () {
 
   return PUBLIC_API;
 })();
+
+//News Filter control......
+const newsAllImg = document.querySelectorAll(".news-all");
+newsAllImg.forEach((el, i) => {
+  el.addEventListener("mouseover", (e) => {
+    el.querySelector(".news-img-all").style.filter = "grayscale(0)";
+  });
+  el.addEventListener("mouseout", (e) => {
+    el.querySelector(".news-img-all").style.filter = "grayscale(100)";
+  });
+  el.addEventListener("click", (el) => {
+    window.open(newsData.articles[i].url, "_blank");
+  });
+});

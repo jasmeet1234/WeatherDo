@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500&family=Indie+Flower&family=Open+Sans:wght@300&family=Roboto:wght@300&family=Sacramento&family=Ubuntu+Mono&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300;400;500&family=Open+Sans:wght@300&family=Roboto:wght@300&family=Sacramento&display=swap");
@@ -914,9 +915,58 @@ input:valid ~ label {
   height: 77rem;
   margin-top: 7rem;
 }
+.news-heading {
+  color: black;
+  font-size: 5rem;
+  font-family: "Playfair Display", serif;
+  border-bottom: 5px double black;
+  margin-bottom: 1rem;
+  text-align: center;
+}
 
-.map-info {
+.news-info {
   flex: 1;
+  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/567707/paper_fibers.png);
+  padding: 2rem;
+  font-family: "Roboto", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  border: 2px solid black;
+  border-right: none;
+  overflow-x: scroll;
+}
+.news-title-0 {
+  padding: 0.4rem 0;
+  border-bottom: 2px solid black;
+  padding-bottom: 1.2rem;
+}
+.news-lower-box {
+  display: flex;
+  align-items: center;
+}
+.news-all {
+  cursor: pointer;
+}
+.news-lower-box:last-child {
+  border-bottom: none;
+}
+.news-lower-box img {
+  height: 8rem;
+  margin-right: 1.2rem;
+}
+.news-lower-box {
+  border-bottom: 2px solid black;
+  padding: 1.2rem 0;
+}
+.news-img-all {
+  width: 100%;
+  border-radius: 3rem;
+  filter: grayscale(100);
+  transition: filter 0.3s;
+}
+
+.news-lower img {
+  width: 10rem;
 }
 #map {
   height: 100%;
@@ -1016,13 +1066,40 @@ input:valid ~ label {
   }
   .map-container {
     flex-direction: column;
+    height: 90rem;
   }
   #map {
     order: 0;
+    min-height: 45rem;
   }
-  .map-info {
+  .news-info {
     order: 1;
     margin-top: 2rem;
+    min-height: 45rem;
+    overflow: scroll;
+  }
+  .map-con-mobile {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+  }
+  .news-img-all {
+    width: 10rem;
+  }
+  .con-0 {
+    display: flex;
+    border-bottom: 2px solid black;
+    padding: 1.2rem 0;
+    align-items: center;
+  }
+  .news-title-0 {
+    border: none;
+  }
+  .news-img-0 {
+    padding-right: 1.2rem;
+  }
+  .news-heading {
+    padding-bottom: 1rem;
   }
 }
 @media (max-width: 900px) {
