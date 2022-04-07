@@ -107,6 +107,7 @@ async function newsCall(name) {
 const newsCallBase = function (name) {
   newsCall(name)
     .then((el) => {
+      console.log(el);
       return el.json();
     })
     .then((el) => {
@@ -250,7 +251,6 @@ const pollutionUi = function (el) {
 
 //forcast UI
 const forcastUI = function (el) {
-  console.log(el.list[1].weather[0].id);
   for (let j = 1; j <= 3; j++) {
     if (rain.includes(el.list[j].weather[0].id)) {
       document.querySelector(`.panel3-icon-${j}`).innerHTML = cloudRain;
@@ -311,14 +311,12 @@ const forcastBtnCall = function (location) {
       }
     })
     .then((el) => {
-      console.log(el);
       forcastUI(el);
     })
     .catch((el) => {
       errorDes.textContent = el;
       warning.style.visibility = "visible";
       section1.style.filter = "blur(1rem)";
-      console.log(el);
     });
 };
 //forcast gps call
@@ -338,7 +336,6 @@ const forcastGpsCall = function (lat, long) {
       errorDes.textContent = el;
       warning.style.visibility = "visible";
       section1.style.filter = "blur(1rem)";
-      console.log(el);
     });
 };
 //pollution btn
@@ -366,7 +363,6 @@ const pollutionFunBtn = function (location) {
       errorDes.textContent = el;
       warning.style.visibility = "visible";
       section1.style.filter = "blur(1rem)";
-      console.log(el);
     });
 };
 const pollutionFunGps = function (lat, long) {
@@ -381,7 +377,6 @@ const pollutionFunGps = function (lat, long) {
       errorDes.textContent = el;
       warning.style.visibility = "visible";
       section1.style.filter = "blur(1rem)";
-      console.log(el);
     });
 };
 //Api Calls
@@ -450,7 +445,6 @@ const locationMechanisum = function (el) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       function (position) {
-        console.log(position);
         const { longitude } = position.coords;
         const { latitude } = position.coords;
         apiCallGps(latitude, longitude)
@@ -458,7 +452,6 @@ const locationMechanisum = function (el) {
             return el.json();
           })
           .then((el) => {
-            console.log(el);
             map.setView([el.coord.lat, el.coord.lon], 12);
             if (theMarker != undefined) {
               map.removeLayer(theMarker);
@@ -473,7 +466,6 @@ const locationMechanisum = function (el) {
             errorDes.textContent = el;
             warning.style.visibility = "visible";
             section1.style.filter = "blur(1rem)";
-            console.log(el);
           });
       },
       function () {
@@ -512,7 +504,7 @@ searchForm.addEventListener("submit", (el) => {
   const value = searchFormInput.value;
   searchFormInput.value = "";
   searchFormInput.blur();
-  console.log(document.querySelector("#search-bar").value);
+
   apiCallBtn(value)
     .then((el) => {
       if (el.statusText == "Not Found") {
@@ -521,29 +513,23 @@ searchForm.addEventListener("submit", (el) => {
       return el.json();
     })
     .then((el) => {
-      console.log(el);
       commonApi(el);
     })
     .catch((el) => {
       errorDes.textContent = el;
       warning.style.visibility = "visible";
       section2Con.style.filter = "blur(1rem)";
-      console.log(el);
     });
 });
 //focus search bar
 searchFormInput.addEventListener("focusin", (el) => {
-  console.log("sdf");
-
   if (mediaQuery.matches) {
     document.querySelector(".nav-title").style.visibility = "hidden";
-    console.log("onfocus");
   }
 });
 searchFormInput.addEventListener("focusout", (el) => {
   if (mediaQuery.matches) {
     document.querySelector(".nav-title").style.visibility = "visible";
-    console.log("onblur");
   }
 });
 //unit for temperature
@@ -647,7 +633,6 @@ slides.forEach((el) => {
     function (event) {
       touchstartX = event.changedTouches[0].screenX;
       touchstartY = event.changedTouches[0].screenY;
-      console.log(touchstartX);
     },
     false
   );
@@ -659,7 +644,7 @@ slides.forEach((el) => {
     function (event) {
       touchendX = event.changedTouches[0].screenX;
       touchendY = event.changedTouches[0].screenY;
-      console.log(touchendX);
+
       handleGesture();
     },
     false
