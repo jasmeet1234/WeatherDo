@@ -106,7 +106,7 @@ async function newsCall(name) {
 const newsNotFound = function () {
   document.querySelector(".news-not-found").style.display = "none";
   document.querySelector(".news-loader").style.display = "flex";
-  document.querySelector(".news-info").style.overflowY = "hidden";
+  document.querySelector(".news-info").style.overflow = "hidden";
   document.querySelector(".news-content-con").style.visibility = "hidden";
 
   setTimeout(() => {
@@ -138,7 +138,7 @@ const newsCallBase = function (name) {
 const newsUI = function (el) {
   document.querySelector(".news-not-found").style.display = "none";
   document.querySelector(".news-loader").style.display = "flex";
-  document.querySelector(".news-info").style.overflowY = "hidden";
+  document.querySelector(".news-info").style.overflow = "hidden";
   document.querySelector(".news-content-con").style.visibility = "hidden";
 
   setTimeout(() => {
@@ -150,7 +150,7 @@ const newsUI = function (el) {
         .setAttribute("src", `${el.articles[i].image}`);
     }
     document.querySelector(".news-loader").style.display = "none";
-    document.querySelector(".news-info").style.overflowY = "scroll";
+    document.querySelector(".news-info").style.overflow = "scroll";
     document.querySelector(".news-content-con").style.visibility = "visible";
   }, 2000);
 

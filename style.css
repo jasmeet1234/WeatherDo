@@ -1002,7 +1002,7 @@ input:valid ~ label {
   font-weight: 700;
   border: 2px solid black;
   border-right: none;
-  overflow-y: scroll;
+  overflow: scroll;
   font-family: "Radley", serif;
   position: relative;
 }
@@ -1064,6 +1064,7 @@ input:valid ~ label {
   flex-direction: column;
   height: 100%;
 }
+
 .news-not-found-text {
   color: black;
   font-size: 4rem;
@@ -1220,7 +1221,7 @@ input:valid ~ label {
     text-align: center;
     text-shadow: #111 1px 1px;
     margin-bottom: 3.5rem;
-    margin-top: -1rem;
+    margin-top: -3rem;
   }
 }
 @media (max-width: 900px) {
