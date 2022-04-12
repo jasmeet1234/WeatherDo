@@ -103,26 +103,57 @@ async function newsCall(name) {
     `https://gnews.io/api/v4/search?q=${name}&lang=en&token=98a69e814190910a529f264609b35d48`
   );
 }
+const newsNotFound = function () {
+  document.querySelector(".news-not-found").style.display = "none";
+  document.querySelector(".news-loader").style.display = "flex";
+  document.querySelector(".news-info").style.overflowY = "hidden";
+  document.querySelector(".news-content-con").style.visibility = "hidden";
 
+  setTimeout(() => {
+    document.querySelector(".news-loader").style.display = "none";
+    document.querySelector(".news-not-found").style.display = "flex";
+  }, 2000);
+};
 const newsCallBase = function (name) {
   newsCall(name)
     .then((el) => {
       console.log(el);
-      return el.json();
+      if (el.ok == false) {
+        console.log("wrongg");
+        newsNotFound();
+      } else {
+        return el.json();
+      }
     })
     .then((el) => {
-      console.log(el);
-      newsUI(el);
+      console.log(el.articles.length);
+      if (el.articles.length < 4) {
+        console.log("wrongg");
+        newsNotFound();
+      } else {
+        newsUI(el);
+      }
     });
 };
 const newsUI = function (el) {
-  for (let i = 0; i < 4; i++) {
-    document.querySelector(`.news-title-${i}`).textContent =
-      el.articles[i].title;
-    document
-      .querySelector(`.news-img-${i}`)
-      .setAttribute("src", `${el.articles[i].image}`);
-  }
+  document.querySelector(".news-not-found").style.display = "none";
+  document.querySelector(".news-loader").style.display = "flex";
+  document.querySelector(".news-info").style.overflowY = "hidden";
+  document.querySelector(".news-content-con").style.visibility = "hidden";
+
+  setTimeout(() => {
+    for (let i = 0; i < 4; i++) {
+      document.querySelector(`.news-title-${i}`).textContent =
+        el.articles[i].title;
+      document
+        .querySelector(`.news-img-${i}`)
+        .setAttribute("src", `${el.articles[i].image}`);
+    }
+    document.querySelector(".news-loader").style.display = "none";
+    document.querySelector(".news-info").style.overflowY = "scroll";
+    document.querySelector(".news-content-con").style.visibility = "visible";
+  }, 2000);
+
   newsData = el;
 };
 //panelUI
