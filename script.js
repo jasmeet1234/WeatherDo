@@ -544,6 +544,7 @@ searchForm.addEventListener("submit", (el) => {
       return el.json();
     })
     .then((el) => {
+      section2.classList.toggle("hidden");
       commonApi(el);
     })
     .catch((el) => {
