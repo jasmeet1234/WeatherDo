@@ -37,7 +37,6 @@ const sunsetText = document.querySelector(".sunset-text");
 const box = document.querySelector(".box");
 const searchForm = document.querySelector(".search-bar");
 const searchFormInput = document.querySelector("#search-bar");
-const section2Con = document.querySelector(".section2Con");
 const mediaQuery = window.matchMedia("(max-width:560px)");
 const loader2 = document.querySelector(".loader2");
 const loader3 = document.querySelector(".loader3");
@@ -67,6 +66,7 @@ const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" 
 </svg>`;
 let narratinArray = [];
 let speak = "";
+let temp = 0;
 const months = [
   "January",
   "February",
@@ -96,7 +96,7 @@ let theMarkericon = L.icon({
 
   iconSize: [50, 50], // size of the icon
 });
-let temp = 0;
+
 // newsUi
 async function newsCall(name) {
   return fetch(
@@ -117,18 +117,14 @@ const newsNotFound = function () {
 const newsCallBase = function (name) {
   newsCall(name)
     .then((el) => {
-      console.log(el);
       if (el.ok == false) {
-        console.log("wrongg");
         newsNotFound();
       } else {
         return el.json();
       }
     })
     .then((el) => {
-      console.log(el.articles.length);
       if (el.articles.length < 4) {
-        console.log("wrongg");
         newsNotFound();
       } else {
         newsUI(el);
@@ -140,15 +136,14 @@ const newsUI = function (el) {
   document.querySelector(".news-loader").style.display = "flex";
   document.querySelector(".news-info").style.overflow = "hidden";
   document.querySelector(".news-content-con").style.visibility = "hidden";
-
+  for (let i = 0; i < 4; i++) {
+    document.querySelector(`.news-title-${i}`).textContent =
+      el.articles[i].title;
+    document
+      .querySelector(`.news-img-${i}`)
+      .setAttribute("src", `${el.articles[i].image}`);
+  }
   setTimeout(() => {
-    for (let i = 0; i < 4; i++) {
-      document.querySelector(`.news-title-${i}`).textContent =
-        el.articles[i].title;
-      document
-        .querySelector(`.news-img-${i}`)
-        .setAttribute("src", `${el.articles[i].image}`);
-    }
     document.querySelector(".news-loader").style.display = "none";
     document.querySelector(".news-info").style.overflow = "scroll";
     document.querySelector(".news-content-con").style.visibility = "visible";
@@ -161,7 +156,6 @@ const panelUI = function (el) {
   newsCallBase(el.name);
   p1CityName.textContent = panel3Heading.textContent = el.name;
   const day = new Date(el.dt * 1000);
-
   p1Day.textContent = days[day.getDay()] + ",";
 
   if (rain.includes(el.weather[0].id)) {
@@ -428,9 +422,11 @@ async function apiCallGps(lat, long) {
 //Common api
 const commonApi = function (el) {
   loader2.style.visibility = "visible";
-  // document.getElementsByTagName("html")[0].style.overflow = "hidden";
   section2.classList.toggle("hidden");
   section1.style.display = "none";
+  if (document.querySelector("#canvas")) {
+    document.querySelector("#canvas").remove();
+  }
   panelUI(el);
   // //loader
   setTimeout(function () {
@@ -439,9 +435,8 @@ const commonApi = function (el) {
     loader1.style.display = "none";
     map.invalidateSize();
     loader2.style.visibility = "hidden";
-    document.querySelector("#canvas").style.display = "hidden";
     // document.getElementsByTagName("html")[0].style.overflow = "auto";
-  }, 3000);
+  }, 2500);
 };
 //eventhandler for button
 const buttonMechanisum = function (el) {
@@ -468,7 +463,6 @@ const buttonMechanisum = function (el) {
       errorDes.textContent = el;
       warning.style.visibility = "visible";
       section1.style.filter = "blur(1rem)";
-      console.log(el);
     });
 };
 //eventhandler for GPS
@@ -516,13 +510,12 @@ locationLan.addEventListener("click", locationMechanisum);
 window.addEventListener("load", (el) => {
   setTimeout(function () {
     loader1.style.display = "none";
-  }, 3000);
+  }, 2500);
 });
 //error handler
 cross.addEventListener("click", (el) => {
   section1.style.filter = "blur(0)";
   warning.style.visibility = "hidden";
-  section2Con.style.filter = "blur(0)";
 });
 
 //Pollution wiki
@@ -550,7 +543,6 @@ searchForm.addEventListener("submit", (el) => {
     .catch((el) => {
       errorDes.textContent = el;
       warning.style.visibility = "visible";
-      section2Con.style.filter = "blur(1rem)";
     });
 });
 //focus search bar
@@ -632,7 +624,7 @@ const prevSlide = function () {
   goToSlide(curSlide);
   activateDot(curSlide);
 };
-// let timer = setInterval(nextSlide, 8000);
+// let timer = setInterval(nextSlide, 8000); //delete
 
 //mobile slider
 
@@ -688,7 +680,6 @@ function handleGesture() {
     touchendX < touchstartX &&
     Math.abs(touchendX - touchstartX) > Math.abs(touchendY - touchstartY)
   ) {
-    console.log("Swiped Left");
     nextSlide();
     // clearInterval(timer);
     // timer = setInterval(nextSlide, 8000);
@@ -698,7 +689,6 @@ function handleGesture() {
     touchendX > touchstartX &&
     Math.abs(touchendX - touchstartX) > Math.abs(touchendY - touchstartY)
   ) {
-    console.log("Swiped Right");
     prevSlide();
     // clearInterval(timer);
     // timer = setInterval(nextSlide, 8000);
@@ -788,7 +778,6 @@ map.on("click", function (e) {
   lat = e.latlng.lat;
   lon = e.latlng.lng;
 
-  console.log("You clicked the map at LAT: " + lat + " and LONG: " + lon);
   //Clear existing marker,
 
   if (theMarker != undefined) {
@@ -808,7 +797,6 @@ map.on("click", function (e) {
       errorDes.textContent = el;
       warning.style.visibility = "visible";
       section1.style.filter = "blur(1rem)";
-      console.log(el);
     });
 });
 
@@ -835,17 +823,6 @@ narrationContainer.addEventListener("click", (el) => {
   narCount++;
 });
 
-//test
-// fetch(
-//   `http://maps.openweathermap.org/maps/2.0/weather/TA2/{z}/{x}/{y}?date=1527811200&opacity=0.9&fill_bound=true&appid=bf99cb0065e369f731cfedfe08b80061`
-// )
-//   .then((el) => {
-//     return el.json();
-//   })
-//   .then((el) => {
-//     console.log(el);
-//   });
-
 //Forcast panel
 
 const panelAll3 = document.querySelectorAll(".panel-day");
@@ -862,7 +839,6 @@ panelAll3.forEach((el, i) => {
 slides.forEach((e) => {
   e.addEventListener("focus", (el) => {
     clearInterval(timer);
-    console.log("eeeee");
   });
 });
 slides.forEach((e) => {
@@ -871,13 +847,6 @@ slides.forEach((e) => {
   });
 });
 // Falling rain simulation using 2D canvas
-// - vanilla JS, no frameworks
-// - framerate independent physics
-// - slow-mo / fast-forward support via demo.speed
-// - supports high-DPI screens
-// - falling rain particles are drawn as vector lines
-// - splash particles are lazily pre-rendered so gradients aren't computed each frame
-// - all particles make use of object pooling to further boost performance
 
 // initialize
 document.addEventListener("DOMContentLoaded", function () {
@@ -1158,7 +1127,6 @@ demo.mouseHandler = function (evt) {
   demo.updateCursor(evt.clientX, evt.clientY);
 };
 demo.touchHandler = function (evt) {
-  evt.preventDefault();
   var touch = evt.touches[0];
   demo.updateCursor(touch.clientX, touch.clientY);
 };

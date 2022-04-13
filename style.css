@@ -553,7 +553,9 @@ input:valid ~ label {
   font-size: 2.2rem;
   font-weight: 600;
 }
-
+.panel-weather {
+  text-align: left;
+}
 .panel3 div > div {
   margin: 1rem;
   transition: all 0.3s;
@@ -1235,6 +1237,10 @@ input:valid ~ label {
   .panel1 {
     width: 36.5rem;
     height: 50rem;
+  }
+  .panel3 {
+    height: 52rem;
+    width: 39rem;
   }
   .wrapper-warning {
     width: 100%;
