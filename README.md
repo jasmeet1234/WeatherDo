@@ -72,9 +72,3 @@ It emphasizes **pure logic building, accessibility enhancements, and clean UI/UX
 - External APIs may have free usage limits or require sign-up.
 
 ---
-> **A responsive Vanilla JavaScript-based weather app featuring real-time forecasts, AQI tracking, news integration, and accessibility support.**
-
----
-
-If you want, I can also create a **compressed ultra-clean "minimal" version** in case you want a lighter README for GitHub (some devs prefer that!) 🚀🎯  
-Would you like that too?
