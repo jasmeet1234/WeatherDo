@@ -4,6 +4,8 @@ Weatherdo is a dynamic and fully responsive weather forecasting web application 
 It delivers real-time weather forecasts, air pollution indices, breaking news updates, and interactive maps, all while maintaining high accessibility standards through integrated **text-to-speech narration**.  
 This project was developed **without using any frameworks or libraries like React.js, Bootstrap, or TailwindCSS**, to strengthen my core web development skills.
 
+🌐 Live Demo: [Link](jasmeet1234.github.io/WeatherDo/)
+
 ---
 
 ## 🎯 Purpose
