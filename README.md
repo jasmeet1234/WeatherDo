@@ -51,6 +51,10 @@ It emphasizes **pure logic building, accessibility enhancements, and clean UI/UX
 
 ## 📸 Snapshots
 
+![WeatherDo](Snaps/WeatherDo.gif)
+![WeatherDo](Snaps/pic1.png)
+![WeatherDo](Snaps/pic2.png)
+![WeatherDo](Snaps/pic3.png)
 
 ---
 
